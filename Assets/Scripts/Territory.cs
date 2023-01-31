@@ -17,7 +17,7 @@ public class Territory : MonoBehaviour, IDropHandler
     {
         character = eventdata.pointerDrag;
 
-        character.GetComponent<RectTransform>().anchoredPosition = this.transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition;
+        character.GetComponent<RectTransform>().position = this.transform.GetChild(0).GetComponent<RectTransform>().position;
         character.GetComponent<CharacterScript>().slot = this.gameObject;
         cards.Add(character);
 

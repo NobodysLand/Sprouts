@@ -16,8 +16,8 @@ public class CharacterScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     public GameObject lastSlot;
     public GameObject Card;
     public GameObject Token;
-
     public Slider slider;
+    public GameManager gameManager;
 
     private void Awake()
     {
@@ -29,6 +29,7 @@ public class CharacterScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     public void OnBeginDrag(PointerEventData eventdata)
     {
+        gameManager.dragging = true;
         canvasGroup.alpha = .6f;
         canvasGroup.blocksRaycasts = false;
         slotPlace = false;
@@ -42,7 +43,7 @@ public class CharacterScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     }
     public void OnEndDrag(PointerEventData eventdata)
     {
-        Debug.Log("ENDDRAG");
+        gameManager.dragging = false;
         canvasGroup.alpha = 1f;
         if (!slot)
         {
@@ -57,16 +58,19 @@ public class CharacterScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+        gameManager.dragging = true;
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        gameManager.dragging = true;
         this.GetComponent<RectTransform>().localScale = this.GetComponent<RectTransform>().localScale * 1.2f;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        gameManager.dragging = false;
         this.GetComponent<RectTransform>().localScale = this.GetComponent<RectTransform>().localScale / 1.2f;
 
     }
