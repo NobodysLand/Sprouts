@@ -19,12 +19,16 @@ public class CharacterScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     public Slider slider;
 
+    private BaseCard baseCard;
+
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         lastPosition = GetComponent<RectTransform>().position;
         this.transform.SetAsLastSibling();
+        baseCard = new WeakCard();
+        baseCard.Initialize();
     }
 
     public void OnBeginDrag(PointerEventData eventdata)
