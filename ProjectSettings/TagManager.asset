@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - Game
-  - 
+  - Teste
   - 
   - 
   - 
@@ -46,4 +46,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Overlay
+    uniqueID: 117292567
     locked: 0
