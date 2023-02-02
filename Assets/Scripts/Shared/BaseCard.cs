@@ -9,4 +9,6 @@ abstract class BaseCard
     public abstract int TakeDamage(int damage);
 
     public abstract int HP { get; }
+    public abstract int Attack { get; }
+
 }

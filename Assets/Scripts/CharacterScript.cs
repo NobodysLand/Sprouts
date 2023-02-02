@@ -60,6 +60,9 @@ public class CharacterScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
     }
 
+    public int getCardAttack(){
+        return baseCard.Attack;
+    }
     public void OnDrag(PointerEventData eventData)
     {
         gameManager.dragging = true;

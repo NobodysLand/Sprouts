@@ -13,6 +13,16 @@ public class Territory : MonoBehaviour, IDropHandler
     public List<GameObject> cards = new List<GameObject>();
     public GameObject modal;
 
+    public bool territoryTaken;
+    private BaseTerritory baseTerritory;
+
+    public float resourceTimer;
+    private void Awake() {
+        baseTerritory = new EasyTerritory();
+        baseTerritory.Initialize();
+        resourceTimer = (float) baseTerritory.ResourceRate;
+        territoryTaken = false;
+    }
     public void OnDrop(PointerEventData eventdata)
     {
         character = eventdata.pointerDrag;
@@ -62,8 +72,22 @@ public class Territory : MonoBehaviour, IDropHandler
         TakeTerritory();
     }
 
+    private void Update() {
+        if(territoryTaken){
+            if(baseTerritory.ResourceTotal>0){
+                resourceTimer -= Time.deltaTime;
+                if(resourceTimer <= 0){
+                    baseTerritory.GenerateResource();
+                    Debug.Log("saudando a mandioca "+ baseTerritory.ResourceTotal);
+                    resourceTimer = baseTerritory.ResourceRate;
+                }
+            }
+        }
+    }
     private void TakeTerritory()
     {
+        int damage = character.GetComponent<CharacterScript>().getCardAttack();
+        baseTerritory.ResolveCombat(damage);
         int random = Random.Range(0, 10);
         character.GetComponent<CanvasGroup>().blocksRaycasts = true;
         if (random > 4)
@@ -90,7 +114,8 @@ public class Territory : MonoBehaviour, IDropHandler
 
         if (choice)
         {
-            StartCoroutine(LoadAsynchronously());
+            // StartCoroutine(LoadAsynchronously());
+            TakeTerritory();
             return;
         }
 

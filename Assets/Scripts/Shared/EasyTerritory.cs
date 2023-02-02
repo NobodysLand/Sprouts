@@ -16,24 +16,52 @@ class EasyTerritory : BaseTerritory
     }
 
 
-    public override void ManageResource()
+    public override void GenerateResource()
     {
-        // a cada RESOURCERATE segundos, reduz 1 do RESOURCETOTAL. Até chegar a 0
+        resourceTotal--;
     }
 
     public override bool ResolveCombat(int damage)
     {
-        int totalDamage = damage*timeToTake;
+        float totalDamage = damage*timeToTake;
         if(totalDamage >= hitPoints) {
+            Debug.Log("favela venceu");
             return true;
         } else {
             float successRate = (totalDamage/hitPoints)*100;
             int random = Random.Range(0, 100);
+            Debug.Log(successRate);
+            Debug.Log(random);
             if(random <= successRate){
+                Debug.Log("favela venceu");
                 return true;
             } else{
+                Debug.Log("Tururu");
                 return false;
             }
+        }
+    }
+    public override int ResourceRate
+    {
+        get
+        {
+            return resourceRate;
+        }
+    }
+
+    public override int ResourceTotal
+    {
+        get
+        {
+            return resourceTotal;
+        }
+    }
+
+    public override int ResourceType
+    {
+        get
+        {
+            return (int) resourceType;
         }
     }
     

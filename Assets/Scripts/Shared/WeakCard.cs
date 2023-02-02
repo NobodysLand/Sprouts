@@ -24,4 +24,12 @@ class WeakCard : BaseCard
             return hitPoints;
         }
     }
+
+    public override int Attack
+    {
+        get
+        {
+            return attack;
+        }
+    }
 }

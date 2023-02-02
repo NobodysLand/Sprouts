@@ -12,14 +12,18 @@ abstract class BaseTerritory
     protected ResouceType resourceType;
     protected int resourceTotal;
     protected int resourceRate;
-    protected int hitPoints;
-    protected int timeToTake;
+    protected float hitPoints;
+    protected float timeToTake;
     
     public abstract void Initialize();
     // public abstract int DamageMod();
     public abstract bool ResolveCombat(int damage);
 
-    public abstract void ManageResource();
+    public abstract void GenerateResource();
 
-    // public abstract int HP { get; }
+    public abstract int ResourceRate { get; }
+
+    public abstract int ResourceTotal { get; }
+
+    public abstract int ResourceType { get; }
 }
