@@ -51,10 +51,10 @@ public class CharacterScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         canvasGroup.alpha = 1f;
         if (!slot)
         {
-            if (lastSlot)
-            {
-                lastSlot.GetComponent<Territory>().cards.Remove(this.gameObject);
-            }
+            //if (lastSlot)
+            //{
+            //    lastSlot.GetComponent<Territory>().cards.Remove(this.gameObject);
+            //}
             canvasGroup.blocksRaycasts = true;
             this.GetComponent<RectTransform>().position = lastPosition;
         }
