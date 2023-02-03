@@ -7,47 +7,56 @@ using UnityEngine.UI;
 public class Territory : MonoBehaviour, IDropHandler
 {
 
-    Slider slider;
+    public Slider slider;
     GameObject character;
     public bool territory = false;
     public List<GameObject> cards = new List<GameObject>();
-    public GameObject modal;
+    public GameObject attackModal;
 
     public bool territoryTaken;
+    public bool beingAttacked;
     private BaseTerritory baseTerritory;
+    public List<GameObject> slotTokens;
+    public List<GameObject> requiredTerritory;
+    public GameObject territoryManager;
+    public GameManager gameManager;
 
     private int resourceType;
     public GameObject resourceManager;
     public float resourceTimer;
-    private void Awake() {
+    private void Awake()
+    {
         baseTerritory = new EasyTerritory();
         baseTerritory.Initialize();
-        resourceTimer = (float) baseTerritory.ResourceRate;
+        resourceTimer = (float)baseTerritory.ResourceRate;
         territoryTaken = false;
         resourceType = baseTerritory.ResourceType;
         // resourceManager = GameObject.FindGameObjectWithTag("RM");
     }
     public void OnDrop(PointerEventData eventdata)
     {
-        character = eventdata.pointerDrag;
-
-        character.GetComponent<RectTransform>().position = this.transform.GetChild(0).GetComponent<RectTransform>().position;
-        character.GetComponent<CharacterScript>().slot = this.gameObject;
-        cards.Add(character);
-
-        if (territory == false)
+        gameManager.dragging = false;
+        if (territoryTaken == false && beingAttacked == false)
         {
+            character = eventdata.pointerDrag;
+
+            character.GetComponent<RectTransform>().position = this.transform.GetChild(0).GetComponent<RectTransform>().position;
+            character.GetComponent<CharacterScript>().slot = this.gameObject;
+            cards.Add(character);
             character.GetComponent<CanvasGroup>().blocksRaycasts = false;
-            character.GetComponent<CharacterScript>().Token.SetActive(true);
-            character.GetComponent<CharacterScript>().Card.SetActive(false);
+            //character.GetComponent<CharacterScript>().Token.SetActive(true);
+            //slotTokens[0].SetActive(true);
+            character.SetActive(false);
 
             character.GetComponent<CharacterScript>().slot = this.gameObject;
-            slider = character.GetComponent<CharacterScript>().slider;
+            //slider = character.GetComponent<CharacterScript>().slider;
             //StartCoroutine(LoadAsynchronously());
             character.transform.SetAsFirstSibling();
-            modal.GetComponent<ModalScript>().cardsSlot = cards;
-            modal.GetComponent<ModalScript>().setCards();
-            modal.SetActive(true);
+            attackModal.GetComponent<AttackModalScript>().cardsSlot = cards;
+            attackModal.GetComponent<AttackModalScript>().territory = this.gameObject;
+            attackModal.GetComponent<AttackModalScript>().setCards();
+            gameManager.GetComponent<GameManager>().pauseGame(); //Time.timeScale = 0;
+            attackModal.SetActive(true);
 
 
         }
@@ -76,11 +85,15 @@ public class Territory : MonoBehaviour, IDropHandler
         TakeTerritory();
     }
 
-    private void Update() {
-        if(territoryTaken){
-            if(baseTerritory.ResourceTotal>0){
+    private void Update()
+    {
+        if (territoryTaken)
+        {
+            if (baseTerritory.ResourceTotal > 0)
+            {
                 resourceTimer -= Time.deltaTime;
-                if(resourceTimer <= 0){
+                if (resourceTimer <= 0)
+                {
                     baseTerritory.GenerateResource();
                     Debug.Log("saudando a mandioca "+ baseTerritory.ResourceTotal);
                     resourceManager.GetComponent<ResourceManager>().AddResource(resourceType,1);
@@ -89,48 +102,95 @@ public class Territory : MonoBehaviour, IDropHandler
             }
         }
     }
+
     private void TakeTerritory()
     {
         int damage = character.GetComponent<CharacterScript>().getCardAttack();
         baseTerritory.ResolveCombat(damage);
         int random = Random.Range(0, 10);
-        character.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        //character.GetComponent<CanvasGroup>().blocksRaycasts = true;
         if (random > 4)
         {
-            this.GetComponent<Image>().color = Color.green;
+            this.GetComponent<Image>().color = Color.white;
             territory = true;
+            territoryTaken = true;
+            territoryManager.GetComponent<TerritoryManager>().Manager();
         }
         else
         {
-            this.GetComponent<Image>().color = Color.magenta;
+            this.GetComponent<Image>().color = Color.grey;
             territory = false;
         }
-        cards.Remove(character);
-        character.GetComponent<CharacterScript>().Token.SetActive(false);
-        character.GetComponent<CharacterScript>().Card.SetActive(true);
+        //cards.Remove(character);
+        ////character.GetComponent<CharacterScript>().Token.SetActive(false);
+        //slotTokens[0].SetActive(false);
+        enableCards();
+        setTokens();
+        beingAttacked = false;
+        resetTokens();
+        //character.GetComponent<CharacterScript>().Card.SetActive(true);
+        //character.GetComponent<RectTransform>().position = character.GetComponent<CharacterScript>().lastPosition;
 
-        character.GetComponent<RectTransform>().position = character.GetComponent<CharacterScript>().lastPosition;
 
     }
 
-    public void ModalEvent(bool choice)
+    public void AttackModalEvent(bool choice)
     {
-        modal.SetActive(false);
+        attackModal.GetComponent<AttackModalScript>().territory = new GameObject();
+        gameManager.GetComponent<GameManager>().pauseGame();//Time.timeScale = 1;
+        attackModal.SetActive(false);
 
         if (choice)
         {
-            // StartCoroutine(LoadAsynchronously());
-            TakeTerritory();
+            beingAttacked = true;
+            slider.gameObject.SetActive(true);
+            setTokens();
+            StartCoroutine(LoadAsynchronously());
+            //TakeTerritory();
             return;
         }
 
-        territory = false;
-        cards.Remove(character);
-        character.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
-        character.GetComponent<CharacterScript>().Token.SetActive(false);
-        character.GetComponent<CharacterScript>().Card.SetActive(true);
-        character.GetComponent<RectTransform>().position = character.GetComponent<CharacterScript>().lastPosition;
+        enableCards();
+        //territory = false;
+        //cards.Remove(character);
+        //character.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+        //character.GetComponent<CharacterScript>().Token.SetActive(false);
+        //slotTokens[0].SetActive(false);
+        //character.GetComponent<CharacterScript>().Card.SetActive(true);
+        //character.GetComponent<RectTransform>().position = character.GetComponent<CharacterScript>().lastPosition;
+    }
+
+    private void enableCards()
+    {
+        Debug.Log(cards.Count);
+
+        foreach (GameObject card in cards)
+        {
+            card.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            card.GetComponent<CanvasGroup>().alpha = 1f;
+            card.SetActive(true);
+            card.GetComponent<RectTransform>().position = card.GetComponent<CharacterScript>().lastPosition;
+        }
+        cards = new List<GameObject>();
+    }
+
+    private void resetTokens()
+    {
+        slotTokens[0].SetActive(false);
+        slotTokens[1].SetActive(false);
+        slotTokens[2].SetActive(false);
+    }
+    private void setTokens()
+    {
+        int index = 0;
+        foreach (GameObject card in cards)
+        {
+            slotTokens[index].SetActive(true);
+            slotTokens[index].GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
+            index++;
+        }
     }
 
 }
