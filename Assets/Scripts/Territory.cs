@@ -16,12 +16,16 @@ public class Territory : MonoBehaviour, IDropHandler
     public bool territoryTaken;
     private BaseTerritory baseTerritory;
 
+    private int resourceType;
+    public GameObject resourceManager;
     public float resourceTimer;
     private void Awake() {
         baseTerritory = new EasyTerritory();
         baseTerritory.Initialize();
         resourceTimer = (float) baseTerritory.ResourceRate;
         territoryTaken = false;
+        resourceType = baseTerritory.ResourceType;
+        // resourceManager = GameObject.FindGameObjectWithTag("RM");
     }
     public void OnDrop(PointerEventData eventdata)
     {
@@ -79,6 +83,7 @@ public class Territory : MonoBehaviour, IDropHandler
                 if(resourceTimer <= 0){
                     baseTerritory.GenerateResource();
                     Debug.Log("saudando a mandioca "+ baseTerritory.ResourceTotal);
+                    resourceManager.GetComponent<ResourceManager>().AddResource(resourceType,1);
                     resourceTimer = baseTerritory.ResourceRate;
                 }
             }
