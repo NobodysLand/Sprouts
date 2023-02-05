@@ -22,15 +22,37 @@ public class Territory : MonoBehaviour, IDropHandler
     public GameObject cardManager;
     public GameManager gameManager;
     public GameObject audioEffect;
-
+    public bool combatInProgress;
     private int resourceType;
     public GameObject resourceManager;
     public float resourceTimer;
+    [SerializeField] int territoryType;
+    private bool hasResources = true;
     private void Awake()
     {
-        baseTerritory = new EasyTerritory();
-        baseTerritory.Initialize();
+        switch(territoryType){
+            case 0:
+            baseTerritory = new EasyTerritory();
+            baseTerritory.Initialize();
+            hasResources = false;
+            break;
+            case 1:
+            baseTerritory = new WaterTerritory();
+            baseTerritory.Initialize();
+            break;
+            case 2:
+            baseTerritory = new PotassiumTerritory();
+            baseTerritory.Initialize();
+            break;
+            case 3:
+            baseTerritory = new PhosphorusTerritory();
+            baseTerritory.Initialize();
+            break;
+        }
+        // baseTerritory = new PotassiumTerritory();
+        // baseTerritory.Initialize();
         resourceTimer = (float)baseTerritory.ResourceRate;
+        slider.maxValue = baseTerritory.TimeToTake;
         territoryTaken = false;
         resourceType = baseTerritory.ResourceType;
         // resourceManager = GameObject.FindGameObjectWithTag("RM");
@@ -90,7 +112,14 @@ public class Territory : MonoBehaviour, IDropHandler
 
     private void Update()
     {
-        if (territoryTaken)
+        if(beingAttacked && slider.value < slider.maxValue){
+            slider.value += Time.deltaTime;
+        } else if (beingAttacked && slider.value >= slider.maxValue){
+            slider.gameObject.SetActive(false);
+            slider.value = 0f;
+            EventResult();
+        }
+        if (territoryTaken && hasResources)
         {
             if (baseTerritory.ResourceTotal > 0)
             {
@@ -109,11 +138,12 @@ public class Territory : MonoBehaviour, IDropHandler
     private void TakeTerritory()
     {
         // int damage = character.GetComponent<BlankCardScript>().getCardAttack();
-        int damage = 4;
-        baseTerritory.ResolveCombat(damage);
-        int random = Random.Range(0, 10);
+        int damage = 500;
+        bool victory;
+        victory = baseTerritory.ResolveCombat(damage);
+        // int random = Random.Range(0, 10);
         //character.GetComponent<CanvasGroup>().blocksRaycasts = true;
-        if (random > 4)
+        if (victory)
         {
             this.GetComponent<Image>().color = Color.white;
             territory = true;
@@ -154,8 +184,9 @@ public class Territory : MonoBehaviour, IDropHandler
         {
             beingAttacked = true;
             slider.gameObject.SetActive(true);
+            slider.value = 0f;
             setTokens();
-            StartCoroutine(LoadAsynchronously());
+            // StartCoroutine(LoadAsynchronously());
             //TakeTerritory();
             return;
         }

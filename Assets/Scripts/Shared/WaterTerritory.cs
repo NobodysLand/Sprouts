@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-class EasyTerritory : BaseTerritory
+class WaterTerritory : BaseTerritory
 {
     public override void Initialize()
     {
         name = "fácil";
         flavorText = "polenta";
-        // resourceType = ResouceType.Water;
+        resourceType = ResouceType.Water;
         resourceTotal = 20;
         resourceRate = 10;
         hitPoints = 60;
-        timeToTake = 5;
+        timeToTake = 15;
     }
 
 
@@ -21,6 +21,13 @@ class EasyTerritory : BaseTerritory
         resourceTotal--;
     }
 
+public override float TimeToTake
+    {
+        get
+        {
+            return timeToTake;
+        }
+    }
     public override bool ResolveCombat(int damage)
     {
         float totalDamage = damage*timeToTake;
@@ -46,13 +53,6 @@ class EasyTerritory : BaseTerritory
         get
         {
             return resourceRate;
-        }
-    }
-    public override float TimeToTake
-    {
-        get
-        {
-            return timeToTake;
         }
     }
 

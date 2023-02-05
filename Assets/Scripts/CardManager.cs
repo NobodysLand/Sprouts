@@ -33,10 +33,11 @@ public class CardManager : MonoBehaviour
         {
             newCard = Instantiate(opCard);
         }
-
+        
         newCard.transform.SetParent(GameObject.Find("UI").transform);
         newCard.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         newCard.GetComponent<RectTransform>().position = getPosition();
+        GameObject.Find("Medium").GetComponent<BlankCardScript>().setCardInitialTexts(newCard,i);
         cards.Add(newCard);
     }
 

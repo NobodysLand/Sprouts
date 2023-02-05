@@ -26,4 +26,5 @@ abstract class BaseTerritory
     public abstract int ResourceTotal { get; }
 
     public abstract int ResourceType { get; }
+    public abstract float TimeToTake { get; }
 }
