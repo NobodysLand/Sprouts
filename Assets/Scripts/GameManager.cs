@@ -20,9 +20,9 @@ public class GameManager : MonoBehaviour
         if (mapRectTransform.localScale.x == 1)
             screenLimit = (0.6f * mapRectTransform.localScale.x);
         if (mapRectTransform.localScale.x == 2)
-            screenLimit = (1.4f * mapRectTransform.localScale.x);
+            screenLimit = (1.2f * mapRectTransform.localScale.x);
         if (mapRectTransform.localScale.x == 3)
-            screenLimit = (2f * mapRectTransform.localScale.x);
+            screenLimit = (1.8f * mapRectTransform.localScale.x);
 
         mapLimit(mapRectTransform, screenLimit);
         if (Input.GetAxis("Mouse ScrollWheel") != 0)

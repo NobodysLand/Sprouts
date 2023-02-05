@@ -63,18 +63,21 @@ public class CharacterScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     public void OnDrag(PointerEventData eventData)
     {
         gameManager.dragging = true;
+        GetComponent<Canvas>().sortingOrder = 6;
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         gameManager.dragging = true;
+        GetComponent<Canvas>().sortingOrder = 6;
         this.GetComponent<RectTransform>().localScale = this.GetComponent<RectTransform>().localScale * 1.2f;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         gameManager.dragging = false;
+        GetComponent<Canvas>().sortingOrder = 5;
         this.GetComponent<RectTransform>().localScale = this.GetComponent<RectTransform>().localScale / 1.2f;
 
     }

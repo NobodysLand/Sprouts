@@ -6,14 +6,34 @@ public class CardManager : MonoBehaviour
 {
     public List<GameObject> cards = new List<GameObject>();
     public List<GameObject> cardsPosition = new List<GameObject>();
-    public GameObject defaultCard;
+    public GameObject recruitModal;
+    public GameObject weakCard;
+    public GameObject mediumCard;
+    public GameObject strongCard;
+    public GameObject opCard;
 
-    public void newCard()
+    public void newCard(int i)
     {
         if (cards.Count > 4)
             return;
+        GameObject newCard = new GameObject();
+        if (i == 0)
+        {
+            newCard = Instantiate(weakCard);
+        }
+        if (i == 1)
+        {
+            newCard = Instantiate(mediumCard);
+        }
+        if (i == 2)
+        {
+            newCard = Instantiate(strongCard);
+        }
+        if (i == 3)
+        {
+            newCard = Instantiate(opCard);
+        }
 
-        GameObject newCard = Instantiate(defaultCard);
         newCard.transform.SetParent(GameObject.Find("UI").transform);
         newCard.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         newCard.GetComponent<RectTransform>().position = getPosition();
@@ -54,15 +74,14 @@ public class CardManager : MonoBehaviour
         card.GetComponent<RectTransform>().position = card.GetComponent<CharacterScript>().lastPosition;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void openModal()
     {
-
+        recruitModal.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void closeModal()
     {
-
+        recruitModal.SetActive(false);
     }
+
 }
