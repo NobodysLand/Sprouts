@@ -10,19 +10,29 @@ public class GameManager : MonoBehaviour
     public GameObject overlay;
     public GameObject map;
     public GameObject optionsModal;
+    public GameObject guideModal;
+    private GameObject territoryManager;
+    private GameObject finaltree;
     public bool dragging = false;
-    //void Start()
-    //{
 
-    //}
+    private float timer = 0;
+    public float remaningTime = 300;
+
+    private void Awake()
+    {
+        territoryManager = GameObject.Find("TerritoryManager");
+        finaltree = GameObject.Find("FinalTree");
+    }
     void Update()
     {
+        timer += Time.deltaTime;
+        endGame();
         RectTransform mapRectTransform = map.GetComponent<RectTransform>();
         float screenLimit = 0;
         if (mapRectTransform.localScale.x == 1)
-            screenLimit = (0.6f * mapRectTransform.localScale.x);
+            screenLimit = (0.8f * mapRectTransform.localScale.x);
         if (mapRectTransform.localScale.x == 2)
-            screenLimit = (1.2f * mapRectTransform.localScale.x);
+            screenLimit = (1.6f * mapRectTransform.localScale.x);
         if (mapRectTransform.localScale.x == 3)
             screenLimit = (1.8f * mapRectTransform.localScale.x);
 
@@ -87,7 +97,12 @@ public class GameManager : MonoBehaviour
 
     public void guideGame()
     {
-        Debug.Log("Guide");
+        if (guideModal.activeSelf)
+        {
+            guideModal.SetActive(false);
+            return;
+        }
+        guideModal.SetActive(true);
     }
 
     public void configGame()
@@ -109,6 +124,30 @@ public class GameManager : MonoBehaviour
     public void quit()
     {
         Application.Quit();
+    }
+
+    public void endGame()
+    {
+        if(timer > 74)
+        {
+            GetComponent<AudioSource>().pitch += 0.2f;
+            remaningTime -= timer;
+            timer = 0;
+        }
+
+        if(remaningTime < 0)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+
+    }
+
+    public void winGame()
+    {
+        if (finaltree.GetComponent<Territory>().territoryTaken)
+        {
+            SceneManager.LoadScene("EndGame");
+        }
     }
 
 }

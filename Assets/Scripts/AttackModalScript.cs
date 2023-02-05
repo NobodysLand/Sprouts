@@ -33,7 +33,6 @@ public class AttackModalScript : MonoBehaviour, IDropHandler
             tokensSlot[index].GetComponent<Image>().sprite = card.transform.GetChild(0).GetComponent<Image>().sprite;
             index++;
             totalAttack+=card.GetComponent<CharacterScript>().getCardAttack();
-            Debug.Log("hm");
         }
 
     }
