@@ -23,4 +23,10 @@ public class TitleScript : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void mainMenu()
+    {
+        SceneManager.LoadScene("TitleGame");
+    }
+
 }

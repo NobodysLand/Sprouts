@@ -18,8 +18,8 @@ public class ResourceManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        water = 0;
-        potassium = 0;
+        water = 2;
+        potassium = 1;
         phosphorus = 0;
         nitrogen = 0;
     }
