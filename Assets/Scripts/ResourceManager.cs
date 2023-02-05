@@ -27,9 +27,9 @@ public class ResourceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        waterText.text = water.ToString();
-        potassiumText.text = potassium.ToString();
-        phosporusText.text = phosporus.ToString();
+        waterText.text = "WATER: "+water.ToString();
+        potassiumText.text = "POTASSIUM: "+potassium.ToString();
+        phosporusText.text = "PHOSPHATE: "+phosporus.ToString();
         // nitrogenText.text = nitrogen.ToString();
     }
 
