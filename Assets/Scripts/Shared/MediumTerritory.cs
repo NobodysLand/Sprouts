@@ -12,7 +12,7 @@ class MediumTerritory : BaseTerritory
         resourceTotal = 20;
         resourceRate = 10;
         hitPoints = 13;
-        timeToTake = 2;
+        timeToTake = 10;
     }
 
 

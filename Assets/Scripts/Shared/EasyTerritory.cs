@@ -12,7 +12,7 @@ class EasyTerritory : BaseTerritory
         resourceTotal = 20;
         resourceRate = 10;
         hitPoints = 4;
-        timeToTake = 2;
+        timeToTake = 10;
     }
 
 

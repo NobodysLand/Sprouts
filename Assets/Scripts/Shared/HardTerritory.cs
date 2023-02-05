@@ -12,7 +12,7 @@ class HardTerritory : BaseTerritory
         resourceTotal = 20;
         resourceRate = 10;
         hitPoints = 20;
-        timeToTake = 2;
+        timeToTake = 10;
     }
 
 

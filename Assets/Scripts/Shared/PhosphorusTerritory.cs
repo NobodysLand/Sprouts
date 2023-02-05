@@ -12,7 +12,7 @@ class PhosphorusTerritory : BaseTerritory
         resourceTotal = 6;
         resourceRate = 25;
         hitPoints = 17;
-        timeToTake = 2;
+        timeToTake = 30;
     }
 
 
