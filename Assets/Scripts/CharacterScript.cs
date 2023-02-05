@@ -21,6 +21,8 @@ public class CharacterScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
     private BaseCard baseCard;
 
+    public string teste;
+
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -80,6 +82,32 @@ public class CharacterScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         GetComponent<Canvas>().sortingOrder = 5;
         this.GetComponent<RectTransform>().localScale = this.GetComponent<RectTransform>().localScale / 1.2f;
 
+    }
+
+    public void InitializeCard(int cardType){
+        switch(cardType){
+            case 0:
+            baseCard = new WeakCard();
+            baseCard.Initialize();
+            break;
+            case 1:
+            baseCard = new MediumCard();
+            baseCard.Initialize();
+            break;
+            case 2:
+            baseCard = new StrongCard();
+            teste="aqui";
+            baseCard.Initialize();
+            break;
+            case 3:
+            baseCard = new OPCard();
+            baseCard.Initialize();
+            break;
+        }
+    }
+
+    public int getCardAttack(){
+        return baseCard.Attack;
     }
 
 }

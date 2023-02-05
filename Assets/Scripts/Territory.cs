@@ -28,6 +28,8 @@ public class Territory : MonoBehaviour, IDropHandler
     public float resourceTimer;
     [SerializeField] int territoryType;
     private bool hasResources = true;
+
+    public float currentSuccessRate = 0f;
     private void Awake()
     {
         switch(territoryType){
@@ -107,7 +109,7 @@ public class Territory : MonoBehaviour, IDropHandler
 
     private void EventResult()
     {
-        TakeTerritory();
+        TakeTerritory(currentSuccessRate);
     }
 
     private void Update()
@@ -135,15 +137,20 @@ public class Territory : MonoBehaviour, IDropHandler
         }
     }
 
-    private void TakeTerritory()
+
+    public float getSuccessRate(int damage){
+        currentSuccessRate = baseTerritory.CheckSuccesRate(damage);
+        return currentSuccessRate;
+    }
+    private void TakeTerritory(float successRate)
     {
         // int damage = character.GetComponent<BlankCardScript>().getCardAttack();
-        int damage = 500;
-        bool victory;
-        victory = baseTerritory.ResolveCombat(damage);
+        
         // int random = Random.Range(0, 10);
         //character.GetComponent<CanvasGroup>().blocksRaycasts = true;
-        if (victory)
+        bool hasWon = baseTerritory.Victory(successRate);
+        Debug.Log(hasWon);
+        if (hasWon)
         {
             this.GetComponent<Image>().color = Color.white;
             territory = true;
@@ -168,6 +175,7 @@ public class Territory : MonoBehaviour, IDropHandler
         setTokens();
         beingAttacked = false;
         resetTokens();
+        currentSuccessRate = 0f;
         //character.GetComponent<CharacterScript>().Card.SetActive(true);
         //character.GetComponent<RectTransform>().position = character.GetComponent<CharacterScript>().lastPosition;
 

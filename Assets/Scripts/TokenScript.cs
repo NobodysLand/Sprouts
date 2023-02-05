@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class TokenScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public GameObject attackModal;
+    // private bool clicked = false;
 
     public void OnPointerClick(PointerEventData eventData)
     {

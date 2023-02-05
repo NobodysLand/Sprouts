@@ -11,7 +11,7 @@ class PotassiumTerritory : BaseTerritory
         resourceType = ResouceType.Potassium;
         resourceTotal = 9;
         resourceRate = 20;
-        hitPoints = 60;
+        hitPoints = 8;
         timeToTake = 20;
     }
 
@@ -28,25 +28,23 @@ public override float TimeToTake
             return timeToTake;
         }
     }
-    public override bool ResolveCombat(int damage)
+    public override float CheckSuccesRate(int damage)
     {
-        float totalDamage = damage*timeToTake;
+        float totalDamage = damage;
         if(totalDamage >= hitPoints) {
-            Debug.Log("favela venceu");
-            return true;
+            return 100f;
         } else {
-            float successRate = (totalDamage/hitPoints)*100;
-            int random = Random.Range(0, 100);
-            Debug.Log(successRate);
-            Debug.Log(random);
+            return (totalDamage/hitPoints)*100;
+        }
+    }
+
+    public override bool Victory(float successRate){
+        int random = Random.Range(0, 100);
             if(random <= successRate){
-                Debug.Log("favela venceu");
                 return true;
             } else{
-                Debug.Log("Tururu");
                 return false;
             }
-        }
     }
     public override int ResourceRate
     {

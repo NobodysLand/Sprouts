@@ -17,7 +17,9 @@ abstract class BaseTerritory
     
     public abstract void Initialize();
     // public abstract int DamageMod();
-    public abstract bool ResolveCombat(int damage);
+    // public abstract float ResolveCombat(int damage);
+    public abstract float CheckSuccesRate(int damage);
+    public abstract bool Victory(float damage);
 
     public abstract void GenerateResource();
 

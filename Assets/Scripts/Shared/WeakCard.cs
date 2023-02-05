@@ -6,7 +6,7 @@ class WeakCard : BaseCard
 {
     public override void Initialize()
     {
-        int[] _cost = {2,1,0,0};
+        int[] _cost = {2,0,0,0};
         cost = _cost;
         attack = 4;
         defense = 1;

@@ -40,21 +40,28 @@ public class CardManager : MonoBehaviour
         if (i == 0 && isCraftable(weakCost))
         {
             newCard = Instantiate(weakCard);
+            // newCard.GetComponent<CharacterScript>().InitializeCard(i);
+            
             SubtractResource(weakCost);
         }
         if (i == 1 && isCraftable(mediumCost))
         {
             newCard = Instantiate(mediumCard);
+            // mediumCard.GetComponent<CharacterScript>().InitializeCard(i);
+            
             SubtractResource(mediumCost);
         }
         if (i == 2 && isCraftable(strongCost))
         {
             newCard = Instantiate(strongCard);
+            // strongCard.GetComponent<CharacterScript>().InitializeCard(i);
+            
             SubtractResource(strongCost);
         }
         if (i == 3 && isCraftable(opCost))
         {
             newCard = Instantiate(opCard);
+            // opCard.GetComponent<CharacterScript>().InitializeCard(i);
             SubtractResource(opCost);
         }
         if(newCard.GetComponents<Component>().Length ==1 )
@@ -62,6 +69,7 @@ public class CardManager : MonoBehaviour
             Destroy(newCard);
             return;
         }
+        newCard.GetComponent<CharacterScript>().InitializeCard(i);
         newCard.transform.SetParent(GameObject.Find("UI").transform);
         newCard.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         newCard.GetComponent<RectTransform>().position = getPosition();

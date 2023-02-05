@@ -10,6 +10,7 @@ public class AttackModalScript : MonoBehaviour, IDropHandler
 {
     public TMP_Text title;
     public TMP_Text text;
+    public TMP_Text successRateText;
     public Image image;
     public List<GameObject> cardsSlot;
     public List<GameObject> tokensSlot;
@@ -17,6 +18,9 @@ public class AttackModalScript : MonoBehaviour, IDropHandler
     public GameManager gameManager;
     public GameObject attackButton;
     public GameObject cardManager;
+    public int totalAttack;
+    public float currentSuccessRate = 0f;
+
 
     public void setCards()
     {
@@ -28,8 +32,14 @@ public class AttackModalScript : MonoBehaviour, IDropHandler
             tokensSlot[index].SetActive(true);
             tokensSlot[index].GetComponent<Image>().sprite = card.transform.GetChild(0).GetComponent<Image>().sprite;
             index++;
+            totalAttack+=card.GetComponent<CharacterScript>().getCardAttack();
+            Debug.Log("hm");
         }
 
+    }
+
+    private void Update() {
+        successRateText.text = "Win Rate: "+territory.GetComponent<Territory>().getSuccessRate(totalAttack)+"%";
     }
 
     public void OnDrop(PointerEventData eventdata)
@@ -54,6 +64,7 @@ public class AttackModalScript : MonoBehaviour, IDropHandler
 
     private void resetTokens()
     {
+        totalAttack = 0;
         tokensSlot[0].SetActive(false);
         tokensSlot[1].SetActive(false);
         tokensSlot[2].SetActive(false);
@@ -61,7 +72,7 @@ public class AttackModalScript : MonoBehaviour, IDropHandler
 
     public void removeToken(GameObject token)
     {
-        Debug.Log(token.name);
+        // Debug.Log(token.name);
         GameObject card = new GameObject();
         if (token.name == "Slot 1")
         {
@@ -86,6 +97,8 @@ public class AttackModalScript : MonoBehaviour, IDropHandler
         territory.GetComponent<Territory>().cards = cardsSlot;
         setCards();
         cardManager.GetComponent<CardManager>().backToHand(card);
+        // totalAttack-=card.GetComponent<CharacterScript>().getCardAttack();
+        Debug.Log(card.GetComponent<CharacterScript>().getCardAttack());
     }
 
     public void enableButton()
