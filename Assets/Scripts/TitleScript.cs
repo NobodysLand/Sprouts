@@ -5,14 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class TitleScript : MonoBehaviour
 {
+    public GameObject audioEffects;
 
     public void playGame()
     {
+        audioEffects.GetComponent<AudioScript>().playOk();
         SceneManager.LoadScene("MainGame");
     }
 
     public void guideGame()
     {
+        audioEffects.GetComponent<AudioScript>().playOk();
         Application.Quit();
     }
 

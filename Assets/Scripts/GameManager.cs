@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour
             mapRectTransform.Translate(-newPosition);
             mapLimit(mapRectTransform, screenLimit);
         }
-
     }
 
     private void mapLimit(RectTransform mapRectTransform, float screenLimit)
@@ -93,6 +92,5 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Config");
     }
-
 
 }

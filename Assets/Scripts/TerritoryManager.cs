@@ -47,15 +47,17 @@ public class TerritoryManager : MonoBehaviour
         if (enable || territory.GetComponent<Territory>().requiredTerritory.Count == 0)
         {
             territory.GetComponent<Image>().raycastTarget = true;
-            if (territory.GetComponent<Territory>().territoryTaken)
+            if (!territory.GetComponent<Territory>().beingAttacked)
             {
-                territory.GetComponent<Image>().color = Color.white;
+                if (territory.GetComponent<Territory>().territoryTaken)
+                {
+                    territory.GetComponent<Image>().color = Color.white;
+                }
+                else
+                {
+                    territory.GetComponent<Image>().color = Color.grey;
+                }
             }
-            else
-            {
-                territory.GetComponent<Image>().color = Color.grey;
-            }
-
         }
         else
         {

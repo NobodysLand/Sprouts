@@ -19,7 +19,9 @@ public class Territory : MonoBehaviour, IDropHandler
     public List<GameObject> slotTokens;
     public List<GameObject> requiredTerritory;
     public GameObject territoryManager;
+    public GameObject cardManager;
     public GameManager gameManager;
+    public GameObject audioEffect;
 
     private int resourceType;
     public GameObject resourceManager;
@@ -32,6 +34,7 @@ public class Territory : MonoBehaviour, IDropHandler
         territoryTaken = false;
         resourceType = baseTerritory.ResourceType;
         // resourceManager = GameObject.FindGameObjectWithTag("RM");
+        audioEffect = GameObject.Find("Audio Effects");
     }
     public void OnDrop(PointerEventData eventdata)
     {
@@ -116,16 +119,22 @@ public class Territory : MonoBehaviour, IDropHandler
             territory = true;
             territoryTaken = true;
             territoryManager.GetComponent<TerritoryManager>().Manager();
+            audioEffect.GetComponent<AudioSource>().clip = audioEffect.GetComponent<AudioScript>().success;
+            audioEffect.GetComponent<AudioSource>().Play();
         }
         else
         {
             this.GetComponent<Image>().color = Color.grey;
             territory = false;
+            audioEffect.GetComponent<AudioSource>().clip = audioEffect.GetComponent<AudioScript>().failed;
+            audioEffect.GetComponent<AudioSource>().Play();
+
         }
         //cards.Remove(character);
         ////character.GetComponent<CharacterScript>().Token.SetActive(false);
         //slotTokens[0].SetActive(false);
-        enableCards();
+        cardManager.GetComponent<CardManager>().enableCards(cards);
+        cards = new List<GameObject>();
         setTokens();
         beingAttacked = false;
         resetTokens();
@@ -152,7 +161,8 @@ public class Territory : MonoBehaviour, IDropHandler
         }
 
 
-        enableCards();
+        cardManager.GetComponent<CardManager>().enableCards(cards);
+        cards = new List<GameObject>();
         //territory = false;
         //cards.Remove(character);
         //character.GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -161,20 +171,6 @@ public class Territory : MonoBehaviour, IDropHandler
         //slotTokens[0].SetActive(false);
         //character.GetComponent<CharacterScript>().Card.SetActive(true);
         //character.GetComponent<RectTransform>().position = character.GetComponent<CharacterScript>().lastPosition;
-    }
-
-    private void enableCards()
-    {
-        Debug.Log(cards.Count);
-
-        foreach (GameObject card in cards)
-        {
-            card.GetComponent<CanvasGroup>().blocksRaycasts = true;
-            card.GetComponent<CanvasGroup>().alpha = 1f;
-            card.SetActive(true);
-            card.GetComponent<RectTransform>().position = card.GetComponent<CharacterScript>().lastPosition;
-        }
-        cards = new List<GameObject>();
     }
 
     private void resetTokens()

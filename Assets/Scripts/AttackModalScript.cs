@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class AttackModalScript : MonoBehaviour, IDropHandler
 {
@@ -14,9 +15,13 @@ public class AttackModalScript : MonoBehaviour, IDropHandler
     public List<GameObject> tokensSlot;
     public GameObject territory;
     public GameManager gameManager;
+    public GameObject attackButton;
+    public GameObject cardManager;
 
     public void setCards()
     {
+        resetTokens();
+        enableButton();
         int index = 0;
         foreach (GameObject card in cardsSlot)
         {
@@ -52,6 +57,47 @@ public class AttackModalScript : MonoBehaviour, IDropHandler
         tokensSlot[0].SetActive(false);
         tokensSlot[1].SetActive(false);
         tokensSlot[2].SetActive(false);
+    }
+
+    public void removeToken(GameObject token)
+    {
+        Debug.Log(token.name);
+        GameObject card = new GameObject();
+        if (token.name == "Slot 1")
+        {
+            tokensSlot[0].SetActive(false);
+            card = cardsSlot.ElementAt(0);
+            cardsSlot.RemoveAt(0);
+        }
+        if (token.name == "Slot 2")
+        {
+            tokensSlot[1].SetActive(false);
+            card = cardsSlot.ElementAt(1);
+
+            cardsSlot.RemoveAt(1);
+        }
+        if (token.name == "Slot 3")
+        {
+            tokensSlot[2].SetActive(false);
+            card = cardsSlot.ElementAt(2);
+
+            cardsSlot.RemoveAt(2);
+        }
+        territory.GetComponent<Territory>().cards = cardsSlot;
+        setCards();
+        cardManager.GetComponent<CardManager>().backToHand(card);
+    }
+
+    public void enableButton()
+    {
+        if(cardsSlot.Count == 0)
+        {
+            attackButton.GetComponent<Button>().enabled = false;
+        }
+        else
+        {
+            attackButton.GetComponent<Button>().enabled = true;
+        }
     }
 
 }
