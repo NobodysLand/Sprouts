@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject overlay;
     public GameObject map;
+    public GameObject optionsModal;
     public bool dragging = false;
     //void Start()
     //{
@@ -90,7 +92,23 @@ public class GameManager : MonoBehaviour
 
     public void configGame()
     {
-        Debug.Log("Config");
+        if (optionsModal.activeSelf)
+        {
+            optionsModal.SetActive(false);
+            return;
+        }
+        optionsModal.SetActive(true);
+
+    }
+
+    public void mainMenu()
+    {
+        SceneManager.LoadScene("TitleGame");
+    }
+
+    public void quit()
+    {
+        Application.Quit();
     }
 
 }
