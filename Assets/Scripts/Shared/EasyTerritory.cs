@@ -11,8 +11,8 @@ class EasyTerritory : BaseTerritory
         // resourceType = ResouceType.Water;
         resourceTotal = 20;
         resourceRate = 10;
-        hitPoints = 20;
-        timeToTake = 10;
+        hitPoints = 4;
+        timeToTake = 2;
     }
 
 

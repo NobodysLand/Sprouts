@@ -10,7 +10,9 @@ public class ResourceManager : MonoBehaviour
     [SerializeField]int potassium;
     [SerializeField]int phosphorus;
     [SerializeField]int nitrogen;
-
+    [SerializeField]float waterTimer;
+    [SerializeField]float potassiumTimer;
+    [SerializeField]float phosphorusTimer;
     [SerializeField] TextMeshProUGUI waterText;
     [SerializeField] TextMeshProUGUI potassiumText;
     [SerializeField] TextMeshProUGUI phosphorusText;
@@ -27,9 +29,9 @@ public class ResourceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        waterText.text = "WATER: "+water.ToString();
-        potassiumText.text = "POTASSIUM: "+potassium.ToString();
-        phosphorusText.text = "PHOSPHATE: "+phosphorus.ToString();
+        waterText.text = "WATER: "+water.ToString()+"("+(int)waterTimer+"s)";
+        potassiumText.text = "POTASSIUM: "+potassium.ToString()+"("+(int)potassiumTimer+"s)";
+        phosphorusText.text = "PHOSPHATE: "+phosphorus.ToString()+"("+(int)phosphorusTimer+"s)";
         // nitrogenText.text = nitrogen.ToString();
     }
 
@@ -46,6 +48,19 @@ public class ResourceManager : MonoBehaviour
             break;
             case 3:
             nitrogen+=quantity;
+            break;
+        }
+    }
+    public void ResourceTimer(int resource, float timer){
+        switch(resource){
+            case 0:
+            waterTimer=timer;
+            break;
+            case 2:
+            phosphorusTimer=timer;
+            break;
+            case 1:
+            potassiumTimer=timer;
             break;
         }
     }

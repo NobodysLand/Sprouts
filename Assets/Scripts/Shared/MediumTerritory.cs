@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-class PhosphorusTerritory : BaseTerritory
+class MediumTerritory : BaseTerritory
 {
     public override void Initialize()
     {
         name = "fácil";
         flavorText = "polenta";
-        resourceType = ResouceType.Phosphorus;
-        resourceTotal = 6;
-        resourceRate = 25;
-        hitPoints = 17;
+        // resourceType = ResouceType.Water;
+        resourceTotal = 20;
+        resourceRate = 10;
+        hitPoints = 13;
         timeToTake = 2;
     }
 
@@ -21,13 +21,6 @@ class PhosphorusTerritory : BaseTerritory
         resourceTotal--;
     }
 
-public override float TimeToTake
-    {
-        get
-        {
-            return timeToTake;
-        }
-    }
     public override float CheckSuccesRate(int damage)
     {
         float totalDamage = damage;
@@ -51,6 +44,13 @@ public override float TimeToTake
         get
         {
             return resourceRate;
+        }
+    }
+    public override float TimeToTake
+    {
+        get
+        {
+            return timeToTake;
         }
     }
 

@@ -50,6 +50,21 @@ public class Territory : MonoBehaviour, IDropHandler
             baseTerritory = new PhosphorusTerritory();
             baseTerritory.Initialize();
             break;
+            case 4:
+            baseTerritory = new MediumTerritory();
+            baseTerritory.Initialize();
+            hasResources = false;
+            break;
+            case 5:
+            baseTerritory = new HardTerritory();
+            baseTerritory.Initialize();
+            hasResources = false;
+            break;
+            case 6:
+            baseTerritory = new BossTerritory();
+            baseTerritory.Initialize();
+            hasResources = false;
+            break;
         }
         // baseTerritory = new PotassiumTerritory();
         // baseTerritory.Initialize();
@@ -126,6 +141,7 @@ public class Territory : MonoBehaviour, IDropHandler
             if (baseTerritory.ResourceTotal > 0)
             {
                 resourceTimer -= Time.deltaTime;
+                resourceManager.GetComponent<ResourceManager>().ResourceTimer(resourceType,resourceTimer);
                 if (resourceTimer <= 0)
                 {
                     baseTerritory.GenerateResource();

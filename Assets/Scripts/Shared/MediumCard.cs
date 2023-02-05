@@ -6,7 +6,7 @@ class MediumCard : BaseCard
 {
     public override void Initialize()
     {
-        int[] _cost = {4,2,1,0};
+        int[] _cost = {4,2,0,0};
         cost = _cost;
         attack = 9;
         defense = 3;

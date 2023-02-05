@@ -6,7 +6,7 @@ class OPCard : BaseCard
 {
     public override void Initialize()
     {
-        int[] _cost = {10,0,2,1};
+        int[] _cost = {8,0,2,1};
         cost = _cost;
         attack = 20;
         defense = 10;

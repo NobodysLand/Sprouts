@@ -12,7 +12,7 @@ class PotassiumTerritory : BaseTerritory
         resourceTotal = 9;
         resourceRate = 20;
         hitPoints = 8;
-        timeToTake = 20;
+        timeToTake = 2;
     }
 
 
