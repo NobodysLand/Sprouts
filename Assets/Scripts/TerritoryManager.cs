@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TerritoryManager : MonoBehaviour
@@ -64,7 +65,10 @@ public class TerritoryManager : MonoBehaviour
             territory.GetComponent<Image>().raycastTarget = false;
             territory.GetComponent<Image>().color = Color.black;
         }
-
+        if (GameObject.Find("F1").GetComponent<Territory>().territoryTaken)
+        {
+            SceneManager.LoadScene("EndGame");
+        }
     }
 
 }
