@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CharacterScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class OPCardCharacter : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Canvas canvas;
 
@@ -27,8 +27,8 @@ public class CharacterScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         canvasGroup = GetComponent<CanvasGroup>();
         lastPosition = GetComponent<RectTransform>().position;
         this.transform.SetAsLastSibling();
-        // baseCard = new WeakCard();
-        // baseCard.Initialize();
+        baseCard = new OPCard();
+        baseCard.Initialize();
     }
 
     public void OnBeginDrag(PointerEventData eventdata)
@@ -60,6 +60,9 @@ public class CharacterScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
     }
 
+    public int getCardAttack(){
+        return baseCard.Attack;
+    }
     public void OnDrag(PointerEventData eventData)
     {
         gameManager.dragging = true;

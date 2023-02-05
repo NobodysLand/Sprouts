@@ -21,7 +21,7 @@ public class AttackModalScript : MonoBehaviour, IDropHandler
         foreach (GameObject card in cardsSlot)
         {
             tokensSlot[index].SetActive(true);
-            tokensSlot[index].GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
+            tokensSlot[index].GetComponent<Image>().sprite = card.transform.GetChild(0).GetComponent<Image>().sprite;
             index++;
         }
 

@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-class WeakCard : BaseCard
+class MediumCard : BaseCard
 {
     public override void Initialize()
     {
-        int[] _cost = {2,1,0,0};
+        int[] _cost = {4,2,1,0};
         cost = _cost;
-        attack = 4;
-        defense = 1;
-        hitPoints = 5;
+        attack = 9;
+        defense = 3;
+        hitPoints = 10;
     }
 
     public override int TakeDamage(int damage)
@@ -26,18 +26,19 @@ class WeakCard : BaseCard
             return hitPoints;
         }
     }
-    public override int Defense
-    {
-        get
-        {
-            return defense;
-        }
-    }
+
     public override int Attack
     {
         get
         {
             return attack;
+        }
+    }
+    public override int Defense
+    {
+        get
+        {
+            return defense;
         }
     }
     public override int[] Cost

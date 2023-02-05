@@ -105,7 +105,8 @@ public class Territory : MonoBehaviour, IDropHandler
 
     private void TakeTerritory()
     {
-        int damage = character.GetComponent<CharacterScript>().getCardAttack();
+        // int damage = character.GetComponent<BlankCardScript>().getCardAttack();
+        int damage = 4;
         baseTerritory.ResolveCombat(damage);
         int random = Random.Range(0, 10);
         //character.GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -188,7 +189,7 @@ public class Territory : MonoBehaviour, IDropHandler
         foreach (GameObject card in cards)
         {
             slotTokens[index].SetActive(true);
-            slotTokens[index].GetComponent<Image>().sprite = card.GetComponent<Image>().sprite;
+            slotTokens[index].GetComponent<Image>().sprite = card.transform.GetChild(0).GetComponent<Image>().sprite;
             index++;
         }
     }
