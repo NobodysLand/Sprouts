@@ -8,19 +8,19 @@ public class ResourceManager : MonoBehaviour
 {
     [SerializeField]int water;
     [SerializeField]int potassium;
-    [SerializeField]int phosporus;
+    [SerializeField]int phosphorus;
     [SerializeField]int nitrogen;
 
     [SerializeField] TextMeshProUGUI waterText;
     [SerializeField] TextMeshProUGUI potassiumText;
-    [SerializeField] TextMeshProUGUI phosporusText;
+    [SerializeField] TextMeshProUGUI phosphorusText;
     [SerializeField] TextMeshProUGUI nitrogenText;
     // Start is called before the first frame update
     void Start()
     {
         water = 0;
         potassium = 0;
-        phosporus = 0;
+        phosphorus = 0;
         nitrogen = 0;
     }
 
@@ -29,7 +29,7 @@ public class ResourceManager : MonoBehaviour
     {
         waterText.text = "WATER: "+water.ToString();
         potassiumText.text = "POTASSIUM: "+potassium.ToString();
-        phosporusText.text = "PHOSPHATE: "+phosporus.ToString();
+        phosphorusText.text = "PHOSPHATE: "+phosphorus.ToString();
         // nitrogenText.text = nitrogen.ToString();
     }
 
@@ -39,7 +39,7 @@ public class ResourceManager : MonoBehaviour
             water+=quantity;
             break;
             case 2:
-            phosporus+=quantity;
+            phosphorus+=quantity;
             break;
             case 1:
             potassium+=quantity;
@@ -56,7 +56,7 @@ public class ResourceManager : MonoBehaviour
             water-=quantity;
             break;
             case 2:
-            phosporus-=quantity;
+            phosphorus-=quantity;
             break;
             case 1:
             potassium-=quantity;
@@ -65,5 +65,15 @@ public class ResourceManager : MonoBehaviour
             nitrogen-=quantity;
             break;
         }
+    }
+
+    public int GetAvailableWater(){
+        return water;
+    }
+    public int GetAvailablePotassium(){
+        return potassium;
+    }
+    public int GetAvailablePhosphorus(){
+        return phosphorus;
     }
 }
